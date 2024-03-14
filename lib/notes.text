@@ -1,0 +1,30 @@
+
+/*
+Singleton class => Singleton is useful when you want to have a single instance of a class that can be accessed 
+from multiple parts of the application. For example, you might want to create a Singleton class to manage 
+application-level state or to provide a global configuration for your app.
+
+class MySingleton {
+  static MySingleton _instance;
+  MySingleton._internal();
+  factory MySingleton() {
+    if (_instance == null) {
+      _instance = MySingleton._internal();
+    }
+    return _instance;
+  }
+}
+
+Points:
+1: Make the constructor private: 
+Making the constructor private prevents the class from being instantiated outside of the class.
+2: Use a static variable to hold the instance: 
+Using a static variable to hold the instance of the class ensures that only
+one instance of the class is created.
+3: Use a factory constructor: 
+Using a factory constructor allows you to control the creation of the object and 
+ensure that only one instance of the object is created.
+4: Consider using the get_it package: 
+The get_it package is a dependency injection package that provides a simple way to create and 
+manage Singleton classes in Flutter. It also allows you to register and access dependencies across the app easily.
+*/
