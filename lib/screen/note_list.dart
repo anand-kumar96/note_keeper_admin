@@ -49,7 +49,7 @@ class _NoteScreenState extends State<NoteScreen> {
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.7),
       appBar: AppBar(
-        title: const Text('Notes', style: TextStyle(color: Colors.white),),
+        title: const Text('Note Keeper Admin', style: TextStyle(color: Colors.white),),
         backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.6),
         ),
       floatingActionButton: FloatingActionButton(

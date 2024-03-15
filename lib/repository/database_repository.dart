@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'package:note_keeper/model/notes_model.dart';
+import 'package:note_keeper/sync/sqlite_to_mongodb.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
   // Create singleton class
 class DatabaseRepository {
-   static const _databaseName = 'note.db';
+   static const _databaseName = 'noteAdmin.db';
    static const _databaseVersion = 1;
-   static const noteTable = 'note_table';
+   static const noteTable = 'note_table_admin';
    static const columnId = 'id';
    static const columnTitle = 'title';
    static const columnDescription = 'description';
@@ -64,12 +65,16 @@ class DatabaseRepository {
 	Future<int> insertNote(NotesModel note) async {
 		Database db = await database;
 		var result = await db.insert(noteTable, note.toJson());
+    note.id = result;
+    // craete note to mongodb
+    await addNotesToMongoDb(note);
 		return result;
 	}
   // Update Operation: Update a Note object and save it to database
 	Future<int> updateNote(NotesModel note) async {
 		var db = await database;
 		var result = await db.update(noteTable, note.toJson(), where: '$columnId = ?', whereArgs: [note.id]);
+    await updateNoteToMongoDbById(note);
 		return result;
 	}
 
@@ -77,6 +82,7 @@ class DatabaseRepository {
 	Future<int> deleteNote(int id) async {
 		var db = await database;
     int result = await db.delete(noteTable,where: '$columnId = ?', whereArgs: [id]);
+    await deleteNoteToMongoDbById(id);
 		return result;
 	}
 
